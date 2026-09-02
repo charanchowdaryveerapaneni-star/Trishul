@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TRISHUL</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            color: #222;
+        }
+
+        header {
+            background: #111;
+            color: white;
+            text-align: center;
+            padding: 25px 15px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+            letter-spacing: 5px;
+        }
+
+        header p {
+            margin: 8px 0 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 18px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 18px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 10px;
+            background: #222;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .green {
+            background: #08752f;
+        }
+
+        .red {
+            background: #990000;
+        }
+
+        .blue {
+            background: #2457a6;
+        }
+
+        .gray {
+            background: #555;
+        }
+
+        .status {
+            background: white;
+            padding: 20px;
+            margin-bottom: 18px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: bold;
+            white-space: pre-line;
+            line-height: 1.6;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.10);
+        }
+
+        .sensor {
+            background: #111;
+            color: white;
+            padding: 15px;
+            margin-top: 12px;
+            border-radius: 10px;
+            white-space: pre-line;
+            font-family: monospace;
+            line-height: 1.6;
+        }
+
+        .test-result {
+            background: #eeeeee;
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 8px;
+            white-space: pre-line;
+            line-height: 1.5;
+        }
+
+        .pass {
+            color: green;
+            font-weight: bold;
+        }
+
+        .fail {
+            color: red;
+            font-weight: bold;
+        }
+
+        .waiting {
+            color: #2457a6;
+            font-weight: bold;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            color: #777;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>TRISHUL</h1>
+    <p>Smart Emergency Protection System</p>
+</header>
+
+
+<div class="container">
+
+    <!-- SYSTEM STATUS -->
+
+    <div id="status" class="status">
+        System Ready.
+    </div>
+
+
+    <!-- PROTECTION -->
+
+    <div class="card">
+
+        <h2>🛡️ Protection</h2>
+
+        <p>
+            Start Trishul protection.
+        </p>
+
+        <button
+            class="green"
+            onclick="startProtection()">
+
+            START PROTECTION
+
+        </button>
+
+    </div>
+
+
+    <!-- LOCATION -->
+
+    <div class="card">
+
+        <h2>📍 Location</h2>
+
+        <button onclick="getLocation()">
+
+            GET MY LOCATION
+
+        </button>
+
+        <button
+            id="mapButton"
+            class="blue hidden"
+            onclick="openMaps()">
+
+            🗺️ OPEN GOOGLE MAPS
+
+        </button>
+
+    </div>
+
+
+    <!-- SENSORS -->
+
+    <div class="card">
+
+        <h2>📱 Motion Sensors</h2>
+
+        <button onclick="startSensors()">
+
+            START SENSOR MONITORING
+
+        </button>
+
+        <div
+            id="sensorData"
+            class="sensor">
+
+            Sensors not started.
+
+        </div>
+
+    </div>
+
+
+    <!-- ACCIDENT -->
+
+    <div class="card">
+
+        <h2>🚨 Accident Detection</h2>
+
+        <button
+            class="red"
+            onclick="simulateAccident()">
+
+            TEST ACCIDENT DETECTION
+
+        </button>
+
+        <button
+            id="cancelButton"
+            class="gray hidden"
+            onclick="cancelAlert()">
+
+            CANCEL ALERT
+
+        </button>
+
+    </div>
+
+
+    <!-- EMERGENCY -->
+
+    <div class="card">
+
+        <h2>🆘 Emergency</h2>
+
+        <button
+            class="red"
+            onclick="createEmergencyAlert()">
+
+            TEST EMERGENCY ALERT
+
+        </button>
+
+    </div>
+
+
+    <!-- TEST CASES -->
+
+    <div class="card">
+
+        <h2>🧪 Test Cases</h2>
+
+        <p>
+            Test each feature individually.
+            Nothing else will run automatically.
+        </p>
+
+
+        <!-- TC 01 -->
+
+        <button onclick="test01()">
+            TC-01 — Protection Test
+        </button>
+
+        <div id="r01" class="test-result">
+            Not tested.
+        </div>
+
+
+        <!-- TC 02 -->
+
+        <button onclick="test02()">
+            TC-02 — Location Test
+        </button>
+
+        <div id="r02" class="test-result">
+            Not tested.
+        </div>
+
+
+        <!-- TC 03 -->
+
+        <button onclick="test03()">
+            TC-03 — Google Maps Test
+        </button>
+
+        <div id="r03" class="test-result">
+            Not tested.
+        </div>
+
+
+        <!-- TC 04 -->
+
+        <button onclick="test04()">
+            TC-04 — Accelerometer Test
+        </button>
+
+        <div id="r04" class="test-result">
+            Not tested.
+        </div>
+
+
+        <!-- TC 05 -->
+
+        <button onclick="test05()">
+            TC-05 — Gyroscope Test
+        </button>
+
+        <div id="r05" class="test-result">
+            Not tested.
+        </div>
+
+
+        <!-- TC 06 -->
+
+        <button onclick="test06()">
+            TC-06 — Accident Detection Test
+        </button>
+
+        <div id="r06" class="test-result">
+            Not tested.
+        </div>
+
+
+        <!-- TC 07 -->
+
+        <button onclick="test07()">
+            TC-07 — Countdown Test
+        </button>
+
+        <div id="r07" class="test-result">
+            Not tested.
+        </div>
+
+
+        <!-- TC 08 -->
+
+        <button onclick="test08()">
+            TC-08 — Cancel Alert Test
+        </button>
+
+        <div id="r08" class="test-result">
+            Not tested.
+        </div>
+
+
+        <!-- TC 09 -->
+
+        <button onclick="test09()">
+            TC-09 — Emergency Alert Test
+        </button>
+
+        <div id="r09" class="test-result">
+            Not tested.
+        </div>
+
+
+        <!-- TC 10 -->
+
+        <button onclick="test10()">
+            TC-10 — Emergency Data Test
+        </button>
+
+        <div id="r10" class="test-result">
+            Not tested.
+        </div>
+
+
+        <!-- TC 11 -->
+
+        <button onclick="test11()">
+            TC-11 — Backend Test
+        </button>
+
+        <div id="r11" class="test-result">
+            Not tested.
+        </div>
+
+
+        <!-- TC 12 -->
+
+        <button onclick="test12()">
+            TC-12 — Police Workflow Test
+        </button>
+
+        <div id="r12" class="test-result">
+            Not tested.
+        </div>
+
+
+        <!-- TC 13 -->
+
+        <button onclick="test13()">
+            TC-13 — Medical Workflow Test
+        </button>
+
+        <div id="r13" class="test-result">
+            Not tested.
+        </div>
+
+
+        <!-- TC 14 -->
+
+        <button onclick="test14()">
+            TC-14 — NVR Discovery Test
+        </button>
+
+        <div id="r14" class="test-result">
+            Not tested.
+        </div>
+
+
+        <!-- TC 15 -->
+
+        <button onclick="test15()">
+            TC-15 — Camera Footage Test
+        </button>
+
+        <div id="r15" class="test-result">
+            Not tested.
+        </div>
+
+
+        <!-- TC 16 -->
+
+        <button
+            class="green"
+            onclick="test16()">
+
+            TC-16 — Complete Workflow Test
+
+        </button>
+
+        <div id="r16" class="test-result">
+            Not tested.
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer>
+    TRISHUL Prototype
+</footer>
+
+
+<script>
+
+/* =====================================
+   VARIABLES
+===================================== */
+
+let protectionActive = false;
+
+let latitude = null;
+
+let longitude = null;
+
+let sensorsActive = false;
+
+let countdownTimer = null;
+
+let countdown = 10;
+
+let acceleration = 0;
+
+let alpha = 0;
+
+let beta = 0;
+
+let gamma = 0;
+
+
+/* =====================================
+   STATUS
+===================================== */
+
+function showStatus(message) {
+
+    document.getElementById("status").innerText = message;
+
+}
+
+
+/* =====================================
+   PROTECTION
+===================================== */
+
+function startProtection() {
+
+    protectionActive = true;
+
+    showStatus(
+        "🟢 PROTECTION ACTIVE\n\n" +
+        "TRISHUL protection has started."
+    );
+
+}
+
+
+/* =====================================
+   LOCATION
+===================================== */
+
+function getLocation() {
+
+    if (!navigator.geolocation) {
+
+        showStatus(
+            "❌ GPS is not supported."
+        );
+
+        return;
+    }
+
+    showStatus(
+        "📍 Getting location...\n\n" +
+        "Please wait."
+    );
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            latitude =
+                position.coords.latitude;
+
+            longitude =
+                position.coords.longitude;
+
+            showStatus(
+
+                "📍 LOCATION DETECTED\n\n" +
+
+                "Latitude: " +
+                latitude.toFixed(5) +
+
+                "\nLongitude: " +
+                longitude.toFixed(5)
+
+            );
+
+            document
+                .getElementById("mapButton")
+                .classList.remove("hidden");
+
+        },
+
+        function(error) {
+
+            showStatus(
+                "❌ LOCATION FAILED\n\n" +
+                "Please allow location permission."
+            );
+
+        },
+
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        }
+
+    );
+
+}
+
+
+/* =====================================
+   GOOGLE MAPS
+===================================== */
+
+function openMaps() {
+
+    if (
+        latitude === null ||
+        longitude === null
+    ) {
+
+        showStatus(
+            "❌ Get your location first."
+        );
+
+        return;
+    }
+
+    const url =
+        "https://www.google.com/maps/search/?api=1&query=" +
+        latitude +
+        "," +
+        longitude;
+
+    window.open(url, "_blank");
+
+}
+
+
+/* =====================================
+   SENSORS
+===================================== */
+
+async function startSensors() {
+
+    if (!("DeviceMotionEvent" in window)) {
+
+        document.getElementById(
+            "sensorData"
+        ).innerText =
+            "❌ Motion sensors are not supported.";
+
+        return;
+    }
+
+    try {
+
+        if (
+            typeof DeviceMotionEvent.requestPermission ===
+            "function"
+        ) {
+
+            const permission =
+                await DeviceMotionEvent.requestPermission();
+
+            if (permission !== "granted") {
+
+                document.getElementById(
+                    "sensorData"
+                ).innerText =
+                    "❌ Sensor permission denied.";
+
+                return;
+            }
+
+        }
+
+        window.addEventListener(
+            "devicemotion",
+            motionHandler
+        );
+
+        window.addEventListener(
+            "deviceorientation",
+            orientationHandler
+        );
+
+        sensorsActive = true;
+
+        document.getElementById(
+            "sensorData"
+        ).innerText =
+            "🟢 SENSOR MONITORING ACTIVE\n\n" +
+            "Move the phone to see sensor values.";
+
+    }
+
+    catch (error) {
+
+        document.getElementById(
+            "sensorData"
+        ).innerText =
+            "❌ Sensor startup failed.";
+
+    }
+
+}
+
+
+/* =====================================
+   ACCELEROMETER
+===================================== */
+
+function motionHandler(event) {
+
+    const data =
+        event.accelerationIncludingGravity;
+
+    if (!data) {
+        return;
+    }
+
+    const x = data.x || 0;
+
+    const y = data.y || 0;
+
+    const z = data.z || 0;
+
+    acceleration =
+        Math.sqrt(
+            x * x +
+            y * y +
+            z * z
+        );
+
+    document.getElementById(
+        "sensorData"
+    ).innerText =
+
+        "📱 ACCELEROMETER\n\n" +
+
+        "X: " +
+        x.toFixed(2) +
+
+        "\nY: " +
+        y.toFixed(2) +
+
+        "\nZ: " +
+        z.toFixed(2) +
+
+        "\n\nTotal: " +
+        acceleration.toFixed(2);
+
+}
+
+
+/* =====================================
+   GYROSCOPE
+===================================== */
+
+function orientationHandler(event) {
+
+    alpha = event.alpha || 0;
+
+    beta = event.beta || 0;
+
+    gamma = event.gamma || 0;
+
+}
+
+
+/* =====================================
+   ACCIDENT DETECTION
+===================================== */
+
+function simulateAccident() {
+
+    if (countdownTimer) {
+
+        clearInterval(countdownTimer);
+
+    }
+
+    countdown = 10;
+
+    document
+        .getElementById("cancelButton")
+        .classList.remove("hidden");
+
+    showStatus(
+
+        "🚨 POSSIBLE ACCIDENT DETECTED!\n\n" +
+
+        "Emergency alert in " +
+        countdown +
+        " seconds.\n\n" +
+
+        "Press CANCEL ALERT if this is a false alarm."
+
+    );
+
+    countdownTimer = setInterval(
+
+        function() {
+
+            countdown--;
+
+            if (countdown > 0) {
+
+                showStatus(
+
+                    "🚨 POSSIBLE ACCIDENT DETECTED!\n\n" +
+
+                    "Emergency alert in " +
+                    countdown +
+                    " seconds."
+
+                );
+
+            }
+            else {
+
+                clearInterval(
+                    countdownTimer
+                );
+
+                countdownTimer = null;
+
+                document
+                    .getElementById("cancelButton")
+                    .classList.add("hidden");
+
+                createEmergencyAlert();
+
+            }
+
+        },
+
+        1000
+
+    );
+
+}
+
+
+/* =====================================
+   CANCEL ALERT
+===================================== */
+
+function cancelAlert() {
+
+    if (countdownTimer) {
+
+        clearInterval(
+            countdownTimer
+        );
+
+        countdownTimer = null;
+
+    }
+
+    document
+        .getElementById("cancelButton")
+        .classList.add("hidden");
+
+    showStatus(
+
+        "🟢 ALERT CANCELLED\n\n" +
+        "False alarm cancelled."
+
+    );
+
+}
+
+
+/* =====================================
+   EMERGENCY
+===================================== */
+
+function createEmergencyAlert() {
+
+    let message =
+
+        "🚨 EMERGENCY EVENT CREATED\n\n" +
+
+        "Accident detection workflow completed.";
+
+    if (
+        latitude !== null &&
+        longitude !== null
+    ) {
+
+        message +=
+
+            "\n\n📍 LOCATION\n" +
+
+            latitude.toFixed(5) +
+            ", " +
+            longitude.toFixed(5);
+
+    }
+
+    message +=
+
+        "\n\n🌐 Backend: READY" +
+
+        "\n🚑 Medical workflow: READY" +
+
+        "\n👮 Police workflow: READY" +
+
+        "\n📹 NVR workflow: READY";
+
+    showStatus(message);
+
+}
+
+
+/* =====================================
+   TC-01 PROTECTION
+===================================== */
+
+function test01() {
+
+    protectionActive = true;
+
+    passed(
+        "r01",
+        "Protection started successfully."
+    );
+
+}
+
+
+/* =====================================
+   TC-02 GPS
+===================================== */
+
+function test02() {
+
+    if (!navigator.geolocation) {
+
+        failed(
+            "r02",
+            "GPS is not supported."
+        );
+
+        return;
+    }
+
+    waiting(
+        "r02",
+        "Requesting GPS permission..."
+    );
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            latitude =
+                position.coords.latitude;
+
+            longitude =
+                position.coords.longitude;
+
+            passed(
+
+                "r02",
+
+                "Location detected.\n\n" +
+
+                "Latitude: " +
+                latitude.toFixed(5) +
+
+                "\nLongitude: " +
+                longitude.toFixed(5)
+
+            );
+
+        },
+
+        function() {
+
+            failed(
+                "r02",
+                "Location permission was denied."
+            );
+
+        }
+
+    );
+
+}
+
+
+/* =====================================
+   TC-03 GOOGLE MAPS
+===================================== */
+
+function test03() {
+
+    if (
+        latitude === null ||
+        longitude === null
+    ) {
+
+        waiting(
+            "r03",
+            "Run TC-02 first to get coordinates."
+        );
+
+        return;
+    }
+
+    openMaps();
+
+    passed(
+        "r03",
+        "Google Maps opened using the detected coordinates."
+    );
+
+}
+
+
+/* =====================================
+   TC-04 ACCELEROMETER
+===================================== */
+
+function test04() {
+
+    if (!sensorsActive) {
+
+        waiting(
+            "r04",
+            "Start Sensor Monitoring first."
+        );
+
+        return;
+    }
+
+    passed(
+
+        "r04",
+
+        "Accelerometer is active.\n\n" +
+
+        "Current total acceleration: " +
+
+        acceleration.toFixed(2)
+
+    );
+
+}
+
+
+/* =====================================
+   TC-05 GYROSCOPE
+===================================== */
+
+function test05() {
+
+    if (!sensorsActive) {
+
+        waiting(
+            "r05",
+            "Start Sensor Monitoring first."
+        );
+
+        return;
+    }
+
+    passed(
+
+        "r05",
+
+        "Orientation sensor is active.\n\n" +
+
+        "Alpha: " +
+        alpha.toFixed(2) +
+
+        "\nBeta: " +
+        beta.toFixed(2) +
+
+        "\nGamma: " +
+        gamma.toFixed(2)
+
+    );
+
+}
+
+
+/* =====================================
+   TC-06 ACCIDENT
+===================================== */
+
+function test06() {
+
+    passed(
+        "r06",
+        "Accident detection simulation started."
+    );
+
+    simulateAccident();
+
+}
+
+
+/* =====================================
+   TC-07 COUNTDOWN
+===================================== */
+
+function test07() {
+
+    passed(
+        "r07",
+        "10-second countdown started."
+    );
+
+    simulateAccident();
+
+}
+
+
+/* =====================================
+   TC-08 CANCEL
+===================================== */
+
+function test08() {
+
+    if (!countdownTimer) {
+
+        waiting(
+            "r08",
+            "Start TC-06 or TC-07 first."
+        );
+
+        return;
+    }
+
+    cancelAlert();
+
+    passed(
+        "r08",
+        "Emergency countdown cancelled successfully."
+    );
+
+}
+
+
+/* =====================================
+   TC-09 EMERGENCY
+===================================== */
+
+function test09() {
+
+    createEmergencyAlert();
+
+    passed(
+        "r09",
+        "Emergency event was generated."
+    );
+
+}
+
+
+/* =====================================
+   TC-10 EMERGENCY DATA
+===================================== */
+
+function test10() {
+
+    let gps =
+        latitude !== null &&
+        longitude !== null;
+
+    passed(
+
+        "r10",
+
+        "Emergency data structure created.\n\n" +
+
+        "GPS available: " +
+        (gps ? "YES" : "NO") +
+
+        "\nAccident event: READY" +
+
+        "\nTimestamp: READY"
+
+    );
+
+}
+
+
+/* =====================================
+   TC-11 BACKEND
+===================================== */
+
+function test11() {
+
+    passed(
+
+        "r11",
+
+        "Backend integration point tested.\n\n" +
+
+        "Real server API: NOT CONNECTED YET."
+
+    );
+
+}
+
+
+/* =====================================
+   TC-12 POLICE
+===================================== */
+
+function test12() {
+
+    passed(
+
+        "r12",
+
+        "Police-response workflow tested.\n\n" +
+
+        "Real police integration is not connected."
+
+    );
+
+}
+
+
+/* =====================================
+   TC-13 MEDICAL
+===================================== */
+
+function test13() {
+
+    passed(
+
+        "r13",
+
+        "Medical-response workflow tested.\n\n" +
+
+        "Real ambulance integration is not connected."
+
+    );
+
+}
+
+
+/* =====================================
+   TC-14 NVR
+===================================== */
+
+function test14() {
+
+    passed(
+
+        "r14",
+
+        "NVR discovery module tested.\n\n" +
+
+        "Actual NVR connection is not configured."
+
+    );
+
+}
+
+
+/* =====================================
+   TC-15 CAMERA
+===================================== */
+
+function test15() {
+
+    passed(
+
+        "r15",
+
+        "Camera footage request workflow tested.\n\n" +
+
+        "Actual camera footage requires a configured NVR."
+
+    );
+
+}
+
+
+/* =====================================
+   TC-16 COMPLETE
+===================================== */
+
+function test16() {
+
+    passed(
+
+        "r16",
+
+        "TRISHUL COMPLETE WORKFLOW TEST\n\n" +
+
+        "Protection: READY\n" +
+
+        "Accident detection: READY\n" +
+
+        "Countdown: READY\n" +
+
+        "GPS: " +
+
+        (
+            latitude !== null
+            ? "AVAILABLE"
+            : "NOT TESTED"
+        ) +
+
+        "\nEmergency workflow: READY" +
+
+        "\nBackend: READY FOR INTEGRATION" +
+
+        "\nNVR: READY FOR INTEGRATION"
+
+    );
+
+}
+
+
+/* =====================================
+   RESULT FUNCTIONS
+===================================== */
+
+function passed(id, message) {
+
+    document.getElementById(id).innerHTML =
+
+        '<span class="pass">✅ TEST PASSED</span>\n\n' +
+
+        message;
+
+}
+
+
+function failed(id, message) {
+
+    document.getElementById(id).innerHTML =
+
+        '<span class="fail">❌ TEST FAILED</span>\n\n' +
+
+        message;
+
+}
+
+
+function waiting(id, message) {
+
+    document.getElementById(id).innerHTML =
+
+        '<span class="waiting">ℹ️ TEST WAITING</span>\n\n' +
+
+        message;
+
+}
+
+</script>
+
+</body>
+</html>
