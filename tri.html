@@ -65,6 +65,11 @@
             color: #111;
         }
 
+        .card p {
+            margin: 8px 0 12px;
+            color: #555;
+        }
+
         button {
             width: 100%;
             padding: 16px;
@@ -205,7 +210,7 @@
     <!-- PROTECTION -->
     <div class="card">
         <h2>🛡️ Protection</h2>
-        <p style="margin-bottom: 8px; color: #555;">Start Trishul protection system.</p>
+        <p>Start Trishul protection system.</p>
         <button class="green" onclick="startProtection()">
             START PROTECTION
         </button>
@@ -255,9 +260,7 @@
     <!-- TEST CASES -->
     <div class="card">
         <h2>🧪 Test Cases</h2>
-        <p style="color: #555; margin-bottom: 14px;">
-            Test each feature individually.
-        </p>
+        <p>Test each feature individually.</p>
 
         <button onclick="test01()">TC-01 — Protection Test</button>
         <div id="r01" class="test-result">Not tested.</div>
@@ -688,6 +691,12 @@
         document.getElementById(id).innerHTML =
             '<span class="waiting">ℹ️ TEST WAITING</span>\n\n' + message;
     }
+
+    // =====================================
+    // Log startup message
+    // =====================================
+    console.log("⚡ TRISHUL Emergency Protection System v1.0");
+    console.log("🚀 Ready to protect!");
 </script>
 
 </body>
